@@ -15,6 +15,7 @@ position.
 import operator
 from decimal import Decimal
 from fractions import Fraction, gcd
+from itertools import chain
 
 m = [
     [0, 1, 0, 0, 0, 1],
@@ -49,16 +50,16 @@ def denominators_from_fractions(fractions):
 
 
 def greatest_common_multiplier(fractions):
-    gcd_searchlist = []
-    for fraction in fractions:
-        gcd_searchlist.append(fraction[0])
-        gcd_searchlist.append(fraction[1])
-    return reduce(gcd, gcd_searchlist)
+    return reduce(gcd, chain.from_iterable(fractions))
 
 
-def equalize_denominators(fractions):
+def multiply(numbers):
+    return reduce(operator.mul, numbers)
+
+
+def equalize_fractions(fractions):
     denominators = denominators_from_fractions(fractions)
-    super_denominator = reduce(operator.mul, denominators)
+    super_denominator = multiply(denominators)
     for index, fraction in enumerate(fractions):
         multiplier = super_denominator / fraction.denominator
         fractions[index] = (
@@ -73,7 +74,7 @@ def equalize_denominators(fractions):
 
 def solution(samples):
     samples = [numerators_to_decimals(sample) for sample in samples]
-    iterations = 100
+    iterations = 10000
     queue = [(1, 0)]
     stable_states = get_stable_states(samples)
     probabilities = [[] for _ in samples]
@@ -94,12 +95,17 @@ def solution(samples):
         if stable_states[index]:
             fractions.append(Fraction(sum(probability_set)).limit_denominator())
 
-    fractions = equalize_denominators(fractions)
-    print fractions
+    fractions = equalize_fractions(fractions)
+    denominator = fractions[0][1]
+    result = []
+    for fraction in fractions:
+        result.append(int(fraction[0]))
+    result.append(int(denominator))
+    return result
 
 #
-solution(m)
-solution(n)
+print(solution(m))
+print(solution(n))
 
 # print(get_stable_states(n))
 
