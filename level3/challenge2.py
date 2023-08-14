@@ -11,8 +11,10 @@ The task is to calculate the probabilities of terminating in each terminal
 position.
 """
 
+
+import operator
 from decimal import Decimal
-from fractions import Fraction
+from fractions import Fraction, gcd
 
 m = [
     [0, 1, 0, 0, 0, 1],
@@ -24,64 +26,81 @@ m = [
 ]
 
 
+n = [
+    [0, 2, 1, 0, 0],
+    [0, 0, 0, 3, 4],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0]
+]
+
+
 def get_stable_states(samples):
-    stable_states = []
-    for sample in samples:
-        is_stable = sum(sample) == 0
-        stable_states.append(is_stable)
-    return stable_states
+    return [sum(sample) == 0 for sample in samples]
 
 
-def convert_to_decimal(samples):
-    for sample in samples:
-        denominator = sum(sample)
-        for transition, probability in enumerate(sample):
-            if denominator == 0:
-                probability = Decimal(0)
-            else:
-                probability = Decimal(
-                    Decimal(probability) / Decimal(denominator)
-                )
-            sample[transition] = probability
-    return samples
+def numerators_to_decimals(integers):
+    denominator = Decimal(sum(integers) or 1)
+    return [Decimal(integer) / denominator for integer in integers]
+
+
+def denominators_from_fractions(fractions):
+    return [fraction.denominator for fraction in fractions]
+
+
+def greatest_common_multiplier(fractions):
+    gcd_searchlist = []
+    for fraction in fractions:
+        gcd_searchlist.append(fraction[0])
+        gcd_searchlist.append(fraction[1])
+    return reduce(gcd, gcd_searchlist)
+
+
+def equalize_denominators(fractions):
+    denominators = denominators_from_fractions(fractions)
+    super_denominator = reduce(operator.mul, denominators)
+    for index, fraction in enumerate(fractions):
+        multiplier = super_denominator / fraction.denominator
+        fractions[index] = (
+            fraction.numerator * multiplier,
+            fraction.denominator * multiplier
+        )
+    gcm = greatest_common_multiplier(fractions)
+    for index, fraction in enumerate(fractions):
+        fractions[index] = (fraction[0] / gcm, fraction[1] / gcm)
+    return fractions
 
 
 def solution(samples):
-    samples = convert_to_decimal(samples)
-    iterations = 10
+    samples = [numerators_to_decimals(sample) for sample in samples]
+    iterations = 100
     queue = [(1, 0)]
     stable_states = get_stable_states(samples)
-    probabilities = [[]]*len(samples)
+    probabilities = [[] for _ in samples]
 
-    # import pdb; pdb.set_trace()
-    while iterations > 0:
-        print ''
-        print ''
+    while iterations > 0 and queue:
         iterations -= 1
-        print "Iterations:", iterations
-        print "Queue", queue
-        previous_probability, state = queue.pop(0)
-        print "Prev prob:", previous_probability, "Prev state:", state
-        sample_id = state
-        print "Sample:", samples[sample_id]
+        previous_probability, sample_id = queue.pop(0)
         for transition in range(len(samples[sample_id])):
-            print "This prob from record:", probabilities[transition]
-            print "This prob from sample:", samples[sample_id][transition]
-            import pdb; pdb.set_trace()
             if samples[sample_id][transition]:
-                if probabilities[transition]:
-                    probabilities[transition].append(
-                        probabilities[transition][-1] * previous_probability
-                    )
-                else:
-                    probabilities[transition].append(
-                        samples[sample_id][transition] * previous_probability
-                    )
+                probabilities[transition].append(
+                    samples[sample_id][transition] * previous_probability
+                )
             if not stable_states[transition] and samples[sample_id][transition] != 0:
                 queue.append((probabilities[transition][-1], transition))
-            print "Prob record:", probabilities
 
-    print probabilities
+    fractions = []
+    for index, probability_set in enumerate(probabilities):
+        if stable_states[index]:
+            fractions.append(Fraction(sum(probability_set)).limit_denominator())
 
+    fractions = equalize_denominators(fractions)
+    print fractions
 
+#
 solution(m)
+solution(n)
+
+# print(get_stable_states(n))
+
+# print(convert_to_decimal(m))
