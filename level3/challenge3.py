@@ -11,7 +11,6 @@ entrance and exit nodes.  The entrance and exit positions are always passable
 remove a wall. The height and width of the map can be from 2 to 20. Moves
 can only be made in cardinal directions; no diagonal moves are allowed.
 """
-from copy import deepcopy
 
 
 testcase1 = [
@@ -43,17 +42,18 @@ class Maze:
         self.width = len(map[0])
 
     def solve(self):
-        walls = []
+        pass
 
     def get_walls(self):
         positions = set(self.get_positions())
         walls = []
-        for position in positions:
-            if self.map[position[0]][position[1]] != 1:
-                continue
+        while positions:
+            position = positions.pop()
             contiguous = self.get_contiguous(position)
-            walls.append(contiguous)
             positions.difference_update(contiguous)
+            if self.map[position[0]][position[1]] == 1:
+                walls.append(contiguous)
+        return walls
 
     def get_contiguous(self, source):
         checked = [source]
@@ -102,7 +102,7 @@ class Maze:
         ]
 
 
-maze = Maze(testcase1)
+maze = Maze(testcase2)
 
 print(
     maze.get_walls()
