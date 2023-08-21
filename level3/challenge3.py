@@ -22,6 +22,7 @@ testcase1 = [
 ]
 # Expected output: 11
 
+
 testcase2 = [
     [0, 1, 1, 0],
     [0, 0, 0, 1],
@@ -31,6 +32,59 @@ testcase2 = [
 # Expected output: 7
 
 
-def solution(map):
+class Maze:
     """Work in progress"""
-    pass
+    def __init__(self, map):
+        self.map = map
+        self.moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        self.height = len(map)
+        self.width = len(map[0])
+
+    def solve(self):
+        walls = []
+
+    def get_contiguous(self, source):
+        checked = [source]
+        to_be_checked = [source]
+        contiguous = {source}
+        while to_be_checked:
+            checking = to_be_checked.pop(0)
+            destinations = self.get_destinations(checking)
+            for destination in destinations:
+                contiguous.add(destination)
+                if destination not in checked:
+                    to_be_checked.append(destination)
+            checked.append(checking)
+        return list(contiguous)
+
+    def get_destinations(self, source):
+        destinations = []
+        moves = self.get_valid_moves(source)
+        for move in moves:
+            destination = (source[0] + move[0], source[1] + move[1])
+            destinations.append(destination)
+        return destinations
+
+    def get_valid_moves(self, source):
+        return [
+            move for move in self.moves
+            if self.validate_move(source, move)
+        ]
+
+    def validate_move(self, source, move):
+        destination = (source[0] + move[0], source[1] + move[1])
+        return (
+            0 <= destination[0] < self.height
+            and 0 <= destination[1] < self.width
+            and (
+                self.map[source[0]][source[1]]
+                == self.map[destination[0]][destination[1]]
+            )
+        )
+
+
+maze = Maze(testcase1)
+
+print(
+    maze.get_contiguous((0, 0))
+)
