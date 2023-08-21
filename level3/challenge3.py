@@ -6,7 +6,7 @@ left (0,0) and the exit is at the bottom right (w-1,h-1).
 Write a function solution(map) that generates the length of the shortest path
 from the entrance to the exit, where you are allowed to remove one wall.  The
 path length is the total number of nodes you pass through, counting both the
-entrance and exit nodes.  The entrance and exit positions are always passable
+entrance and exit nodes.  The entrance and exit tiles are always passable
 (0). The map will always be solvable, though you may or may not need to
 remove a wall. The height and width of the map can be from 2 to 20. Moves
 can only be made in cardinal directions; no diagonal moves are allowed.
@@ -40,18 +40,40 @@ class Maze:
         self.moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         self.height = len(map)
         self.width = len(map[0])
+        self.entrance = (0, 0)
+        self.exit = (self.height - 1, self.width - 1)
+        self.neighbors = dict()
+        self.distances = dict()
 
-    def solve(self):
-        pass
+    # def solve(self, wall_to_remove=None):
+    #     pass
+    #
+    # def solve_submaps(self):
+    #     pass
+
+    def remove_wall(self, wall):
+        while wall:
+            tile = wall.pop()
+            self.set_tile(tile, 0)
+
+    def set_tile(self, tile, value):
+        self.map[tile[0]][tile[1]] = value
+
+    # def get_tile(self, tile):
+    #     return self.map[tile[0]][tile[1]]
+
+    def is_solveable(self):
+        pathways = self.get_contiguous(self.entrance)
+        return self.exit in pathways
 
     def get_walls(self):
-        positions = set(self.get_positions())
+        tiles = set(self.get_tiles())
         walls = []
-        while positions:
-            position = positions.pop()
-            contiguous = self.get_contiguous(position)
-            positions.difference_update(contiguous)
-            if self.map[position[0]][position[1]] == 1:
+        while tiles:
+            tile = tiles.pop()
+            contiguous = self.get_contiguous(tile)
+            tiles.difference_update(contiguous)
+            if self.map[tile[0]][tile[1]] == 1:
                 walls.append(contiguous)
         return walls
 
@@ -94,16 +116,24 @@ class Maze:
             )
         )
 
-    def get_positions(self):
+    def get_tiles(self):
         return [
             (row, column)
             for row in range(self.height)
             for column in range(self.width)
         ]
 
+    # def get_passable_tiles(self):
+    #     return [
+    #         (row, column)
+    #         for row in range(self.height)
+    #         for column in range(self.width)
+    #         if self.map[row][column] == 0
+    #     ]
+
 
 maze = Maze(testcase2)
 
 print(
-    maze.get_walls()
+    maze.is_solveable()
 )
