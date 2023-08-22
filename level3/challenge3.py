@@ -11,118 +11,7 @@ entrance and exit nodes.  The entrance and exit tiles are always passable
 remove a wall. The height and width of the maze can be from 2 to 20. Moves
 can only be made in cardinal directions; no diagonal moves are allowed.
 """
-
-
-maze1 = [
-    [0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 1, 1],
-    [0, 1, 1, 1, 1, 1],
-    [0, 0, 0, 0, 0, 0]
-]
-# Expected output: 11
-
-
-maze2 = [
-    [0, 1, 1, 0],
-    [0, 0, 0, 1],
-    [1, 1, 0, 0],
-    [1, 1, 1, 0]
-]
-# Expected output: 7
-
-
-maze3 = [
-    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0],
-    [0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1],
-    [0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0],
-    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0],
-    [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0],
-    [0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0],
-    [0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0],
-    [0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0],
-    [0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0],
-    [0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0],
-    [1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0],
-    [1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0],
-    [1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0],
-    [1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0],
-    [1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1],
-    [1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0],
-]
-
-maze4 = [
-    [0, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [1, 0],
-    [0, 0],
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [0, 1],
-    [0, 0],
-]
-
-maze5 = [
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 0],
-]
-
-maze6 = [
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-]
-
-
-maze7 = [
-    [0, 1],
-    [1, 0]
-]
+from copy import deepcopy
 
 
 class Maze:
@@ -159,12 +48,6 @@ class Maze:
                         self.distances[destination] = self.distances[source] + 1
                         changed = True
 
-    def get_maze_without_wall(self, maze, wall):
-        while wall:
-            tile = wall.pop()
-            self.set_tile(maze, tile, 0)
-        return maze
-
     def initialize_neighbors(self):
         for tile in self.pathway:
             self.neighbors[tile] = self.get_destinations(tile)
@@ -174,6 +57,12 @@ class Maze:
             if tile not in self.distances:
                 self.distances[tile] = float("inf")
         self.distances[self.entrance] = 1
+
+    def get_maze_without_wall(self, maze, wall):
+        while wall:
+            tile = wall.pop()
+            self.set_tile(maze, tile, 0)
+        return maze
 
     def get_walls(self):
         tiles = set(self.get_tiles())
@@ -248,8 +137,9 @@ def solution(map):
         mazes.append(initial_maze)
     for wall in initial_maze.walls:
         submaze = Maze(
-            maze=initial_maze.get_maze_without_wall(initial_maze.maze, wall),
-            distances=initial_maze.distances
+            maze=initial_maze.get_maze_without_wall(
+                deepcopy(initial_maze.maze), wall
+            )
         )
         if submaze.is_solveable:
             mazes.append(submaze)
@@ -258,13 +148,4 @@ def solution(map):
     for maze in mazes:
         if maze.shortest_path < shortest_path:
             shortest_path = maze.shortest_path
-    print shortest_path
-
-
-solution(maze1)
-solution(maze2)
-solution(maze3)
-solution(maze4)
-solution(maze5)
-solution(maze6)
-solution(maze7)
+    return shortest_path
